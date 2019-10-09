@@ -273,6 +273,7 @@ func extractOrEmbedImage(image *C.VipsImage, o Options) (*C.VipsImage, error) {
 		break
 	case o.Trim:
 		left, top, width, height, err := vipsTrim(image, o.Background, o.Threshold)
+        _, _, _, _, _ = width, height, top, left, err
 		if err == nil {
 			image, err = vipsExtract(image, 0, 0, 10, 10)
 			//image, err = vipsExtract(image, left, top, width, height)
