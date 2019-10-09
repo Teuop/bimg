@@ -468,17 +468,20 @@ func getImageBuffer(image *C.VipsImage) ([]byte, error) {
 }
 
 func vipsExtract(image *C.VipsImage, left, top, width, height int) (*C.VipsImage, error) {
-    _, _, _, _ = left, top, width, height
+    /*_, _, _, _ = left, top, width, height
 	var out *C.VipsImage
 	defer C.g_object_unref(C.gpointer(image))
 
-	err := C.vips_rotate_bimg(image, &out, C.int(20))
+	err := C.vips_rotate_bimg(image, &out, C.int(90))
 	if err != 0 {
 		return nil, catchVipsError()
 	}
 
 	return out, nil
-	/*
+    */
+	var buf *C.VipsImage
+	defer C.g_object_unref(C.gpointer(image))
+
     top, left = max(top), max(left)
 	err := C.vips_extract_area_bridge(image, &buf, C.int(left), C.int(top), C.int(width), C.int(height))
 	if err != 0 {
@@ -486,7 +489,6 @@ func vipsExtract(image *C.VipsImage, left, top, width, height int) (*C.VipsImage
 	}
 
 	return buf, nil
-    */
 }
 
 func vipsSmartCrop(image *C.VipsImage, width, height int) (*C.VipsImage, error) {
