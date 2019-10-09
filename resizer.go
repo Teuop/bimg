@@ -265,6 +265,7 @@ func extractOrEmbedImage(image *C.VipsImage, o Options) (*C.VipsImage, error) {
 		left, top = int(math.Max(float64(left), 0)), int(math.Max(float64(top), 0))
 		image, err = vipsExtract(image, 0, 0, 20, 20)
 		//image, err = vipsExtract(image, left, top, width, height)
+        _, _, _, _, _ = width, height, top, left, err
 		break
 	case o.Embed:
 		left, top := (o.Width-inWidth)/2, (o.Height-inHeight)/2
