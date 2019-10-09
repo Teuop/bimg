@@ -509,14 +509,14 @@ func vipsTrim(image *C.VipsImage, background Color, threshold float64) (int, int
 	height := C.int(0)
 
 	err := C.vips_find_trim_bridge(image,
-		&top, &left, &width, &height,
+		&left, &top, &width, &height,
 		C.double(background.R), C.double(background.G), C.double(background.B),
 		C.double(threshold))
 	if err != 0 {
 		return 0, 0, 0, 0, catchVipsError()
 	}
 
-	return int(top), int(left), int(width), int(height), nil
+	return int(left), int(top), int(width), int(height), nil
 }
 
 func vipsShrinkJpeg(buf []byte, input *C.VipsImage, shrink int) (*C.VipsImage, error) {
