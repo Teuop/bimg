@@ -469,7 +469,8 @@ func getImageBuffer(image *C.VipsImage) ([]byte, error) {
 
 func vipsExtract(image *C.VipsImage, left, top, width, height int) (*C.VipsImage, error) {
 	var buf *C.VipsImage
-	defer C.g_object_unref(C.gpointer(image))
+    //vips_image_new
+	//defer C.g_object_unref(C.gpointer(image))
 
 	if width > MaxSize || height > MaxSize {
 		return nil, errors.New("Maximum image size exceeded")
