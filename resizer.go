@@ -263,8 +263,7 @@ func extractOrEmbedImage(image *C.VipsImage, o Options) (*C.VipsImage, error) {
 		height := int(math.Min(float64(inHeight), float64(o.Height)))
 		left, top := calculateCrop(inWidth, inHeight, o.Width, o.Height, o.Gravity)
 		left, top = int(math.Max(float64(left), 0)), int(math.Max(float64(top), 0))
-		image, err = vipsExtract(image, 0, 0, 20, 20)
-		//image, err = vipsExtract(image, left, top, width, height)
+		image, err = vipsExtract(image, left, top, width, height)
         _, _, _, _, _ = width, height, top, left, err
 		break
 	case o.Embed:
@@ -276,8 +275,7 @@ func extractOrEmbedImage(image *C.VipsImage, o Options) (*C.VipsImage, error) {
 		left, top, width, height, err := vipsTrim(image, Color{0, 0, 0}, 10.0)
         _, _, _, _, _ = width, height, top, left, err
 		if err == nil {
-			image, err = vipsExtract(image, 0, 0, 10, 10)
-			//image, err = vipsExtract(image, left, top, width, height)
+			image, err = vipsExtract(image, 1, 1/*left, top*/, width, height)
 		}
 		break
 	case o.Top != 0 || o.Left != 0 || o.AreaWidth != 0 || o.AreaHeight != 0:
@@ -290,8 +288,7 @@ func extractOrEmbedImage(image *C.VipsImage, o Options) (*C.VipsImage, error) {
 		if o.AreaWidth == 0 || o.AreaHeight == 0 {
 			return nil, errors.New("Extract area width/height params are required")
 		}
-		//image, err = vipsExtract(image, o.Left, o.Top, o.AreaWidth, o.AreaHeight)
-		image, err = vipsExtract(image, 0, 0, 15, 15,)
+		image, err = vipsExtract(image, o.Left, o.Top, o.AreaWidth, o.AreaHeight)
 		break
 	}
 
