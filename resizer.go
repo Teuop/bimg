@@ -264,18 +264,19 @@ func extractOrEmbedImage(image *C.VipsImage, o Options) (*C.VipsImage, error) {
 		left, top := calculateCrop(inWidth, inHeight, o.Width, o.Height, o.Gravity)
 		left, top = int(math.Max(float64(left), 0)), int(math.Max(float64(top), 0))
 		image, err = vipsExtract(image, left, top, width, height)
-        _, _, _, _, _ = width, height, top, left, err
+        //_, _, _, _, _ = width, height, top, left, err
 		break
 	case o.Embed:
 		left, top := (o.Width-inWidth)/2, (o.Height-inHeight)/2
 		image, err = vipsEmbed(image, left, top, o.Width, o.Height, o.Extend, o.Background)
 		break
 	case o.Trim:
-		//left, top, width, height, err := vipsTrim(image, o.Background, o.Threshold)
-		left, top, width, height, err := vipsTrim(image, Color{255, 255, 255}, 10.0)
-        _, _, _, _, _ = width, height, top, left, err
+		left, top, width, height, err := vipsTrim(image, o.Background, o.Threshold)
+		//left, top, width, height, err := vipsTrim(image, Color{255, 255, 255}, 10.0)
+        //_, _, _, _, _ = width, height, top, left, err
 		if err == nil {
-			image, err = vipsExtract(image, 1, 1/*left, top*/, width, height)
+			//image, err = vipsExtract(image, 1, 1/*left, top*/, width, height)
+			image, err = vipsExtract(image, left, top, width, height)
 		}
 		break
 	case o.Top != 0 || o.Left != 0 || o.AreaWidth != 0 || o.AreaHeight != 0:
