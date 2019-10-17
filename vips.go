@@ -480,7 +480,7 @@ func vipsExtract(image *C.VipsImage, left, top, width, height int) (*C.VipsImage
 	return out, nil
     */
 	var buf *C.VipsImage
-	defer C.g_object_unref(C.gpointer(image))
+	//defer C.g_object_unref(C.gpointer(image))
 
     top, left = max(top), max(left)
 	err := C.vips_extract_area_bridge(image, &buf, C.int(left), C.int(top), C.int(width), C.int(height))
